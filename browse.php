@@ -22,6 +22,7 @@ $fields = $result->fetch_fields();
 // Fields
 echo "<tr>";
 foreach($fields as $field) {
+  if($field->name == "id") continue;
   echo "<th>".$field->name."</th>";
 }
 echo "</tr>\n";
@@ -31,6 +32,7 @@ while($row = $result->fetch_assoc()) {
   $id = $row['id'];
   echo "<tr>";
   foreach($row as $key=>$value) {
+    if($key == "id") continue;
     echo "<td><a href=\"view.php?table=$table&id=$id\">$value</a></td>";
   }
   echo "</tr>\n";

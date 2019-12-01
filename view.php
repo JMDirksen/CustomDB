@@ -26,6 +26,7 @@ echo "<a href=\"browse.php?table=$table\">Back</a> <a href=\"edit.php?table=$tab
 echo "<table>";
 while($row = $result->fetch_assoc()) {
   foreach($row as $key=>$value) {
+    if($key == "id") continue;
     echo "<tr>";
     echo "<th>$key</th>";
     echo "<td>$value</td>";
