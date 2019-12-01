@@ -12,8 +12,7 @@ if(!empty($_GET['table'])) {
 else die("Missing/Wrong table variable");
 
 // DB Connect
-$mysqli = new mysqli("localhost", "root", "", "customdb");
-if($mysqli->connect_error) die($mysqli->connect_error);
+$mysqli = connect();
 
 // Query
 $result = $mysqli->query("select * from `$table`");
