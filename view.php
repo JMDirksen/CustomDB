@@ -27,12 +27,12 @@ echo "<table>";
 while($row = $result->fetch_assoc()) {
   foreach($row as $key=>$value) {
     echo "<tr>";
-    echo "<td>$key</td>";
+    echo "<th>$key</th>";
     echo "<td>$value</td>";
     echo "</tr>\n";
   }
 }
-echo "</table>";
 ?>
+</table>
 </body>
 </html>

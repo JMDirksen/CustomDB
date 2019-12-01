@@ -32,9 +32,9 @@ while($row = $result->fetch_assoc()) {
     echo "</tr>\n";
   }
 }
-echo "<tr><td></td><td><input type=\"submit\" name=\"submit\" value=\"Save\"</td></tr>\n";
-echo "</table>\n";
-echo "</form>\n";
 ?>
+<tr><td></td><td><input type="submit" name="submit" value="Save"</td></tr>
+</table>
+</form>
 </body>
 </html>
