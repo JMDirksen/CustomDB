@@ -1,3 +1,13 @@
+<?php
+require("functions.php");
+
+// Save
+if(isset($_POST['submit'])) {
+  echo "Saving...";
+  redirect("view.php?".$_SERVER['QUERY_STRING']);
+}
+
+?>
 <html>
 <head><title>CustomDB</title></head>
 <body>
@@ -5,7 +15,6 @@
 <form method="POST">
 <table>
 <?php
-require("functions.php");
 
 // Input
 if(!empty($_GET['table'])) {

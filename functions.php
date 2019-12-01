@@ -8,3 +8,9 @@ function connect() {
 function sanitize($string) {
   return addslashes(str_replace("`", "``", $string));
 }
+
+function redirect($url = "") {
+  if(empty($url)) $url = $_SERVER['REQUEST_URI'];
+  header("Location: $url", true, 303);
+  die();
+}
