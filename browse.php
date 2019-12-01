@@ -1,5 +1,5 @@
 <html>
-<head><title>CustomDB</title></head>
+<head><title>CustomDB - Browse</title></head>
 <body>
 <table>
 <?php

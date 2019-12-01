@@ -25,9 +25,9 @@ if(isset($_POST['form_submit'])) {
 
 ?>
 <html>
-<head><title>CustomDB</title></head>
+<head><title>CustomDB - Edit</title></head>
 <body>
-<a href="javascript:history.back()">Back</a>
+<a href="javascript:history.back()">Cancel</a>
 <form method="POST">
 <?php
 
