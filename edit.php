@@ -20,7 +20,7 @@ if(isset($_POST['form_submit'])) {
   $result = $mysqli->query($query);
   if(!$result) die("Query error");
   
-  redirect("view.php?".$_SERVER['QUERY_STRING']);
+  redirect("view.php?table=$table&id=$id");
 }
 
 ?>
@@ -32,16 +32,17 @@ if(isset($_POST['form_submit'])) {
 <?php
 
 // Input
-if(!empty($_GET['table'])) {
-  $table = sanitize($_GET['table']);
-}
-else die("Missing/Wrong table variable");
-if(!empty($_GET['id'])) {
-  $id = sanitize($_GET['id']);
-}
-else die("Missing/Wrong id variable");
+$table = isset($_GET['table']) ? sanitize($_GET['table']) : "";
+$id = isset($_GET['id']) ? sanitize($_GET['id']) : "";
+$new = isset($_GET['new']) ? true : false;
+if(empty($table)||(empty($id)&&!$new)) die("Input error");
 
 // Query
+if($new) {
+  $result = $mysqli->query("insert into `$table` () values()");
+  if(!$result) die("Query error");
+  $id = $mysqli->insert_id;
+}
 $result = $mysqli->query("select * from `$table` where id = $id");
 if(!$result) die("Query error");
 

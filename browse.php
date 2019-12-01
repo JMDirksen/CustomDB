@@ -1,7 +1,6 @@
 <html>
 <head><title>CustomDB - Browse</title></head>
 <body>
-<table>
 <?php
 require("functions.php");
 
@@ -20,6 +19,8 @@ if(!$result) die("Query error");
 $fields = $result->fetch_fields();
 
 // Fields
+echo "<a href=\"edit.php?table=$table&new\">New</a>";
+echo "<table>";
 echo "<tr>";
 foreach($fields as $field) {
   if($field->name == "id") continue;
