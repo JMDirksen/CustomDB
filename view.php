@@ -22,7 +22,7 @@ $result = $mysqli->query("select * from `$table` where id = $id");
 if(!$result) die("Query error");
 
 // Record
-echo "<a href=\"edit.php?table=$table&id=$id\">Edit</a>\n";
+echo "<a href=\"browse.php?table=$table\">Back</a> <a href=\"edit.php?table=$table&id=$id\">Edit</a>\n";
 echo "<table>";
 while($row = $result->fetch_assoc()) {
   foreach($row as $key=>$value) {

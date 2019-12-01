@@ -1,6 +1,9 @@
 <html>
 <head><title>CustomDB</title></head>
 <body>
+<a href="javascript:history.back()">Back</a>
+<form method="POST">
+<table>
 <?php
 require("functions.php");
 
@@ -22,8 +25,6 @@ $result = $mysqli->query("select * from `$table` where id = $id");
 if(!$result) die("Query error");
 
 // Form
-echo "<form method=\"POST\">\n";
-echo "<table>\n";
 while($row = $result->fetch_assoc()) {
   foreach($row as $key=>$value) {
     echo "<tr>";
