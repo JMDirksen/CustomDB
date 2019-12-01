@@ -10,9 +10,13 @@ if(isset($_POST['form_submit'])) {
   
   $setfields = [];
   foreach($_POST as $key=>$value) {
+    $key = sanitize($key);
+    $value = sanitize($value);
     if($key == "form_table") $table = $value;
     if($key == "form_id") $id = $value;
-    if(substr($key,0,5) != "form_") $setfields[] = "$key = '$value'";
+    if(substr($key,0,5) != "form_") {
+      $setfields[] = "$key = '$value'";
+    }
   }
   
   // Query
@@ -23,12 +27,25 @@ if(isset($_POST['form_submit'])) {
   redirect("view.php?table=$table&id=$id");
 }
 
+// Delete
+if(isset($_GET['delete']) && !empty($_GET['table']) && !empty($_GET['id'])) {
+  echo "Deleting...";
+  $table = sanitize($_GET['table']);
+  $id = sanitize($_GET['id']);
+  
+  // Query
+  $query = "delete from `$table` where id = $id";
+  $result = $mysqli->query($query);
+  if(!$result) die("Delete error");
+  
+  redirect("browse.php?table=$table");
+  
+}
+
 ?>
 <html>
 <head><title>CustomDB - Edit</title></head>
 <body>
-<a href="javascript:history.back()">Cancel</a>
-<form method="POST">
 <?php
 
 // Input
@@ -47,6 +64,12 @@ $result = $mysqli->query("select * from `$table` where id = $id");
 if(!$result) die("Query error");
 
 // Table
+if($new) echo "<a href=\"edit.php?table=$table&id=$id&delete\">Cancel</a> ";
+else {
+  echo "<a href=\"view.php?table=$table&id=$id\">Cancel</a> | ";
+  echo "<a href=\"edit.php?table=$table&id=$id&delete\">Delete</a> ";
+}
+echo "<form method=\"POST\">";
 echo "<input type=\"hidden\" name=\"form_table\" value=\"$table\">";
 echo "<input type=\"hidden\" name=\"form_id\" value=\"$id\">";
 echo "<table>";
