@@ -24,7 +24,7 @@ echo "<tr>";
 foreach($fields as $field) {
   echo "<th>".$field->name."</th>";
 }
-echo "</tr>".PHP_EOL;
+echo "</tr>\n";
 
 // Rows
 while($row = $result->fetch_assoc()) {
@@ -32,7 +32,7 @@ while($row = $result->fetch_assoc()) {
   foreach($row as $key=>$value) {
     echo "<td>$value</td>";
   }
-  echo "</tr>".PHP_EOL;
+  echo "</tr>\n";
 }
 
 ?>
