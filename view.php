@@ -1,7 +1,6 @@
 <html>
 <head><title>CustomDB</title></head>
 <body>
-<table>
 <?php
 require("functions.php");
 
@@ -10,33 +9,30 @@ if(!empty($_GET['table'])) {
   $table = sanitize($_GET['table']);
 }
 else die("Missing/Wrong table variable");
+if(!empty($_GET['id'])) {
+  $id = sanitize($_GET['id']);
+}
+else die("Missing/Wrong id variable");
 
 // DB Connect
 $mysqli = connect();
 
 // Query
-$result = $mysqli->query("select * from `$table`");
+$result = $mysqli->query("select * from `$table` where id = $id");
 if(!$result) die("Query error");
-$fields = $result->fetch_fields();
 
-// Fields
-echo "<tr>";
-foreach($fields as $field) {
-  echo "<th>".$field->name."</th>";
-}
-echo "</tr>\n";
-
-// Rows
+// Record
+echo "<a href=\"edit.php?table=$table&id=$id\">Edit</a>\n";
+echo "<table>";
 while($row = $result->fetch_assoc()) {
-  $id = $row['id'];
-  echo "<tr>";
   foreach($row as $key=>$value) {
-    echo "<td><a href=\"view.php?table=$table&id=$id\">$value</a></td>";
+    echo "<tr>";
+    echo "<td>$key</td>";
+    echo "<td>$value</td>";
+    echo "</tr>\n";
   }
-  echo "</tr>\n";
 }
-
+echo "</table>";
 ?>
-</table>
 </body>
 </html>
