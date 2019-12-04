@@ -22,8 +22,9 @@ if(!$result = $mysqli->query("select * from `$table` where id = $id"))
   die($mysqli->error);
 
 // Record
-echo "<a href=\"browse.php?table=$table\">Browse</a> | <a href=\"edit.php?table=$table&id=$id\">Edit</a>\n";
-echo "<table>";
+echo "<button onClick=\"location.href='browse.php?table=$table'\"><</button> \n";
+echo "<button onClick=\"location.href='edit.php?table=$table&id=$id'\">Edit</button> \n";
+echo "<table>\n";
 while($row = $result->fetch_assoc()) {
   foreach($row as $key=>$value) {
     if($key == "id") continue;

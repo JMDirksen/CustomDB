@@ -57,15 +57,15 @@ if(!$result = $mysqli->query("select * from `$table` where id = $id"))
   die($mysqli->error);
 
 // Table
-if($new) echo "<a href=\"edit.php?table=$table&id=$id&delete\">Cancel</a> ";
+if($new) echo "<button onClick=\"location.href='edit.php?table=$table&id=$id&delete'\"><</button> \n";
 else {
-  echo "<a href=\"view.php?table=$table&id=$id\">Cancel</a> | ";
-  echo "<a href=\"edit.php?table=$table&id=$id&delete\">Delete</a> ";
+  echo "<button onClick=\"location.href='view.php?table=$table&id=$id'\"><</button> \n";
+  echo "<button onClick=\"location.href='edit.php?table=$table&id=$id&delete'\">Delete</button> \n";
 }
-echo "<form method=\"POST\">";
-echo "<input type=\"hidden\" name=\"form_table\" value=\"$table\">";
-echo "<input type=\"hidden\" name=\"form_id\" value=\"$id\">";
-echo "<table>";
+echo "<form method=\"POST\">\n";
+echo "<input type=\"hidden\" name=\"form_table\" value=\"$table\">\n";
+echo "<input type=\"hidden\" name=\"form_id\" value=\"$id\">\n";
+echo "<table>\n";
 while($row = $result->fetch_assoc()) {
   foreach($row as $key=>$value) {
     if($key == "id") continue;

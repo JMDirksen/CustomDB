@@ -18,8 +18,8 @@ if(!$result = $mysqli->query("select * from `$table`")) die($mysqli->error);
 $fields = $result->fetch_fields();
 
 // Fields
-echo "<a href=\"edit.php?table=$table&new\">New</a>";
-echo "<table>";
+echo "<button onClick=\"location.href='edit.php?table=$table&new'\">New</button> \n";
+echo "<table>\n";
 echo "<tr>";
 foreach($fields as $field) {
   if($field->name == "id") continue;
