@@ -12,9 +12,6 @@ if(!empty($_GET['id'])) {
 }
 else die("Missing/Wrong id variable");
 
-// DB Connect
-$mysqli = connect();
-
 // Query
 if(!$result = $mysqli->query("select * from `$table` where id = $id"))
   die($mysqli->error);

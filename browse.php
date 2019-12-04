@@ -8,9 +8,6 @@ if(!empty($_GET['table'])) {
 }
 else die("Missing/Wrong table variable");
 
-// DB Connect
-$mysqli = connect();
-
 // Query
 if(!$result = $mysqli->query("select * from `$table`")) die($mysqli->error);
 $fields = $result->fetch_fields();

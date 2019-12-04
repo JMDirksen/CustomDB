@@ -18,3 +18,10 @@ function redirect($url = "") {
 function button($text, $href = "") {
   echo "<button onClick=\"location.href='$href'\">$text</button>\n";
 }
+
+function fieldType($type) {
+  if($type == "253") return "text";
+  if($type == "10") return "date";
+  if($type == "text") return "253";
+  if($type == "date") return "10";
+}
