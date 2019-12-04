@@ -18,8 +18,8 @@ else die("Missing/Wrong id variable");
 $mysqli = connect();
 
 // Query
-$result = $mysqli->query("select * from `$table` where id = $id");
-if(!$result) die("Query error");
+if(!$result = $mysqli->query("select * from `$table` where id = $id"))
+  die($mysqli->error);
 
 // Record
 echo "<a href=\"browse.php?table=$table\">Browse</a> | <a href=\"edit.php?table=$table&id=$id\">Edit</a>\n";

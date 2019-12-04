@@ -14,8 +14,7 @@ else die("Missing/Wrong table variable");
 $mysqli = connect();
 
 // Query
-$result = $mysqli->query("select * from `$table`");
-if(!$result) die("Query error");
+if(!$result = $mysqli->query("select * from `$table`")) die($mysqli->error);
 $fields = $result->fetch_fields();
 
 // Fields

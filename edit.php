@@ -21,8 +21,7 @@ if(isset($_POST['form_submit'])) {
   
   // Query
   $query = "update `$table` set ".join(", ",$setfields)." where id = $id";
-  $result = $mysqli->query($query);
-  if(!$result) die("Query error");
+  if(!$result = $mysqli->query($query)) die($mysqli->error);
   
   redirect("view.php?table=$table&id=$id");
 }
@@ -35,8 +34,7 @@ if(isset($_GET['delete']) && !empty($_GET['table']) && !empty($_GET['id'])) {
   
   // Query
   $query = "delete from `$table` where id = $id";
-  $result = $mysqli->query($query);
-  if(!$result) die("Delete error");
+  if(!$result = $mysqli->query($query)) die($mysqli->error);
   
   redirect("browse.php?table=$table");
   
@@ -56,12 +54,12 @@ if(empty($table)||(empty($id)&&!$new)) die("Input error");
 
 // Query
 if($new) {
-  $result = $mysqli->query("insert into `$table` () values()");
-  if(!$result) die("Query error");
+  if(!$result = $mysqli->query("insert into `$table` () values()"))
+    die($mysqli->error);
   $id = $mysqli->insert_id;
 }
-$result = $mysqli->query("select * from `$table` where id = $id");
-if(!$result) die("Query error");
+if(!$result = $mysqli->query("select * from `$table` where id = $id"))
+  die($mysqli->error);
 
 // Table
 if($new) echo "<a href=\"edit.php?table=$table&id=$id&delete\">Cancel</a> ";
