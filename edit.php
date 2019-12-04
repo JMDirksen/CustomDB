@@ -6,8 +6,6 @@ $mysqli = connect();
 
 // Save
 if(isset($_POST['form_submit'])) {
-  echo "Saving...";
-  
   $setfields = [];
   foreach($_POST as $key=>$value) {
     $key = sanitize($key);
@@ -15,11 +13,10 @@ if(isset($_POST['form_submit'])) {
     if($key == "form_table") $table = $value;
     if($key == "form_id") $id = $value;
     if(substr($key,0,5) != "form_") {
-      $setfields[] = "$key = '$value'";
+      $setfields[] = "`$key` = '$value'";
     }
   }
   
-  // Query
   $query = "update `$table` set ".join(", ",$setfields)." where id = $id";
   if(!$result = $mysqli->query($query)) die($mysqli->error);
   
@@ -28,11 +25,9 @@ if(isset($_POST['form_submit'])) {
 
 // Delete
 if(isset($_GET['delete']) && !empty($_GET['table']) && !empty($_GET['id'])) {
-  echo "Deleting...";
   $table = sanitize($_GET['table']);
   $id = sanitize($_GET['id']);
   
-  // Query
   $query = "delete from `$table` where id = $id";
   if(!$result = $mysqli->query($query)) die($mysqli->error);
   
