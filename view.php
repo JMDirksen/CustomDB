@@ -1,8 +1,6 @@
-<html>
-<head><title>CustomDB - View</title></head>
-<body>
 <?php
-require("functions.php");
+require("init.php");
+require("header.php");
 
 // Input
 if(!empty($_GET['table'])) {
@@ -22,8 +20,8 @@ if(!$result = $mysqli->query("select * from `$table` where id = $id"))
   die($mysqli->error);
 
 // Record
-echo "<button onClick=\"location.href='browse.php?table=$table'\"><</button> \n";
-echo "<button onClick=\"location.href='edit.php?table=$table&id=$id'\">Edit</button> \n";
+button("<", "browse.php?table=$table");
+button("Edit", "edit.php?table=$table&id=$id");
 echo "<table>\n";
 while($row = $result->fetch_assoc()) {
   foreach($row as $key=>$value) {
@@ -34,7 +32,6 @@ while($row = $result->fetch_assoc()) {
     echo "</tr>\n";
   }
 }
-?>
-</table>
-</body>
-</html>
+echo "</table>";
+
+require("footer.php");

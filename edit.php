@@ -1,8 +1,5 @@
 <?php
-require("functions.php");
-
-// DB Connect
-$mysqli = connect();
+require("init.php");
 
 // Save
 if(isset($_POST['form_submit'])) {
@@ -35,11 +32,7 @@ if(isset($_GET['delete']) && !empty($_GET['table']) && !empty($_GET['id'])) {
   
 }
 
-?>
-<html>
-<head><title>CustomDB - Edit</title></head>
-<body>
-<?php
+require("header.php");
 
 // Input
 $table = isset($_GET['table']) ? sanitize($_GET['table']) : "";
@@ -57,10 +50,10 @@ if(!$result = $mysqli->query("select * from `$table` where id = $id"))
   die($mysqli->error);
 
 // Table
-if($new) echo "<button onClick=\"location.href='edit.php?table=$table&id=$id&delete'\"><</button> \n";
+if($new) button("<", "edit.php?table=$table&id=$id&delete");
 else {
-  echo "<button onClick=\"location.href='view.php?table=$table&id=$id'\"><</button> \n";
-  echo "<button onClick=\"location.href='edit.php?table=$table&id=$id&delete'\">Delete</button> \n";
+  button("<", "view.php?table=$table&id=$id");
+  button("X", "edit.php?table=$table&id=$id&delete");
 }
 echo "<form method=\"POST\">\n";
 echo "<input type=\"hidden\" name=\"form_table\" value=\"$table\">\n";
@@ -79,5 +72,5 @@ while($row = $result->fetch_assoc()) {
 <tr><td></td><td><input type="submit" name="form_submit" value="Save"</td></tr>
 </table>
 </form>
-</body>
-</html>
+<?php
+require("footer.php");
