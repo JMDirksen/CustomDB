@@ -13,16 +13,15 @@ if($_POST['tablename']) {
   redirect("design.php?table=$table");
 }
 
-//ALTER TABLE `abc`
-//	ADD COLUMN `test` INT(11) NOT NULL DEFAULT '0' AFTER `id`;
-
 // Create field
 if($_POST['fieldname']) {
   $table = sanitize($_POST['table']);
   $field = sanitize($_POST['fieldname']);
+  $type = fieldType(sanitize($_POST['type']));
+  $default = $type == "DATE" ? "1900-01-01" : "";
   
   $query = "ALTER TABLE `$table` " .
-    "ADD COLUMN `$field` VARCHAR(50) NOT NULL DEFAULT ''";
+    "ADD COLUMN `$field` $type NOT NULL DEFAULT '$default'";
   if(!$mysqli->query($query)) die($mysqli->error);
   
   redirect("design.php?table=$table");
@@ -51,6 +50,10 @@ if(!empty($_GET['table'])) {
   echo "<form method=\"POST\">\n";
   echo "<input type=\"hidden\" name=\"table\" value=\"$table\">";
   echo "New field <input type=\"text\" name=\"fieldname\">\n";
+  echo "<select name=\"type\">\n";
+  echo "<option value=\"text\">Text</option>\n";
+  echo "<option value=\"date\">Date</option>\n";
+  echo "</select>\n";
   echo "<input type=\"submit\" value=\"Create\">\n";
   echo "</form>\n";
 }

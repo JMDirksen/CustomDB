@@ -21,7 +21,7 @@ function button($text, $href = "") {
 
 function fieldType($type) {
   if($type == "253") return "text";
+  if($type == "text") return "VARCHAR(50)";
   if($type == "10") return "date";
-  if($type == "text") return "253";
-  if($type == "date") return "10";
+  if($type == "date") return "DATE";
 }
