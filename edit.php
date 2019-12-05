@@ -59,14 +59,13 @@ echo "<form method=\"POST\">\n";
 echo "<input type=\"hidden\" name=\"form_table\" value=\"$table\">\n";
 echo "<input type=\"hidden\" name=\"form_id\" value=\"$id\">\n";
 echo "<table>\n";
-while($row = $result->fetch_assoc()) {
-  foreach($row as $key=>$value) {
-    if($key == "id") continue;
-    echo "<tr>";
-    echo "<td>$key</td>";
-    echo "<td><input type=\"text\" name=\"$key\" value=\"$value\"></td>";
-    echo "</tr>\n";
-  }
+$row = $result->fetch_assoc();
+foreach($row as $key=>$value) {
+  if($key == "id") continue;
+  echo "<tr>";
+  echo "<td>$key</td>";
+  echo "<td><input type=\"text\" name=\"$key\" value=\"$value\"></td>";
+  echo "</tr>\n";
 }
 ?>
 <tr><td></td><td><input type="submit" name="form_submit" value="Save"</td></tr>
