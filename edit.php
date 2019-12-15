@@ -64,7 +64,7 @@ foreach($row as $key=>$value) {
   if($key == "id") continue;
   echo "<tr>";
   echo "<td>$key</td>";
-  echo "<td><input type=\"text\" name=\"$key\" value=\"$value\"></td>";
+  echo "<td><input type=\"".getFieldType($table, $key)."\" name=\"$key\" value=\"$value\"></td>";
   echo "</tr>\n";
 }
 ?>

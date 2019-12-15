@@ -3,7 +3,7 @@
 require("init.php");
 
 // Create table
-if($_POST['tablename']) {
+if(isset($_POST['tablename'])) {
   $table = sanitize($_POST['tablename']);
   
   $query = "CREATE TABLE `$table` " .
@@ -14,10 +14,10 @@ if($_POST['tablename']) {
 }
 
 // Create field
-if($_POST['fieldname']) {
+if(isset($_POST['fieldname'])) {
   $table = sanitize($_POST['table']);
   $field = sanitize($_POST['fieldname']);
-  $type = fieldType(sanitize($_POST['type']));
+  $type = convertType(sanitize($_POST['type']));
   $default = $type == "DATE" ? "1900-01-01" : "";
   
   $query = "ALTER TABLE `$table` " .
@@ -40,7 +40,7 @@ if(!empty($_GET['table'])) {
     die($mysqli->error);
   while($field = $result->fetch_field()) {
     $name = $field->name;
-    $type = fieldType($field->type);
+    $type = convertType($field->type);
     if($name == "id") continue;
     echo "<a href=\"\">$name<a> ($type) ";
   }

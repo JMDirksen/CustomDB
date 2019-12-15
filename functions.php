@@ -19,9 +19,17 @@ function button($text, $href = "") {
   echo "<button onClick=\"location.href='$href'\">$text</button>\n";
 }
 
-function fieldType($type) {
+function convertType($type) {
   if($type == "253") return "text";
   if($type == "text") return "VARCHAR(50)";
   if($type == "10") return "date";
   if($type == "date") return "DATE";
+}
+
+function getFieldType($table, $field) {
+  global $mysqli;
+  if(!$result = $mysqli->query("select `$field` from `$table` limit 1"))
+    die($mysqli->error);
+  $field = $result->fetch_field();
+  return convertType($field->type);
 }
