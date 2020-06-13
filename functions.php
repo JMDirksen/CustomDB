@@ -42,3 +42,11 @@ function getFieldComment($table, $field) {
   $row = $result->fetch_assoc();
   return $row['Comment'];
 }
+
+function getTableComment($table) {
+  global $mysqli;
+  $q = "SELECT TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '".DB_NAME."' and TABLE_NAME = '$table'";
+  if(!$result = $mysqli->query($q)) die($mysqli->error);
+  $row = $result->fetch_assoc();
+  return $row['TABLE_COMMENT'];
+}

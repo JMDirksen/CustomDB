@@ -8,6 +8,9 @@ if(!empty($_GET['table'])) {
 }
 else die("Missing/Wrong table variable");
 
+$display = getTableComment($table) ?: $table;
+echo "<h2>$display</h2>";
+
 // Buttons
 button(ICON_BACK, "/");
 button(ICON_NEW, "edit.php?table=$table&new");
