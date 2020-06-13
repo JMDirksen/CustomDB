@@ -20,18 +20,6 @@ if(isset($_POST['form_submit'])) {
   redirect("view.php?table=$table&id=$id");
 }
 
-// Delete
-if(isset($_GET['delete']) && !empty($_GET['table']) && !empty($_GET['id'])) {
-  $table = sanitize($_GET['table']);
-  $id = sanitize($_GET['id']);
-  
-  $query = "delete from `$table` where id = $id";
-  if(!$result = $mysqli->query($query)) die($mysqli->error);
-  
-  redirect("browse.php?table=$table");
-  
-}
-
 require("header.php");
 
 // Input
@@ -53,7 +41,6 @@ if(!$result = $mysqli->query("select * from `$table` where id = $id"))
 if($new) button(ICON_BACK, "edit.php?table=$table&id=$id&delete");
 else {
   button(ICON_BACK, "view.php?table=$table&id=$id");
-  button(ICON_DELETE, "edit.php?table=$table&id=$id&delete", "Delete this record?");
 }
 echo "<form method=\"POST\">\n";
 echo "<input type=\"hidden\" name=\"form_table\" value=\"$table\">\n";
