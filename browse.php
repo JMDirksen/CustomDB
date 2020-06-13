@@ -8,26 +8,33 @@ if(!empty($_GET['table'])) {
 }
 else die("Missing/Wrong table variable");
 
-// Query
-if(!$result = $mysqli->query("select * from `$table`")) die($mysqli->error);
-$fields = $result->fetch_fields();
+// Buttons
+button("<", "/");
+button("New", "edit.php?table=$table&new");
+
+// Table
+echo "<table>\n";
 
 // Fields
-button("New", "edit.php?table=$table&new");
-echo "<table>\n";
+if(!$result = $mysqli->query("show full columns from `$table`")) die($mysqli->error);
 echo "<tr>";
-foreach($fields as $field) {
-  if($field->name == "id") continue;
-  echo "<th>".$field->name."</th>";
+while($field = $result->fetch_assoc()) {;
+  $name = $field['Field'];
+  $comment = $field['Comment'];
+  if(substr($comment,0,1)=="_") continue;
+  $display = $comment ?: $name;
+  echo "<th>$display</th>";
 }
 echo "</tr>\n";
 
 // Rows
+if(!$result = $mysqli->query("select * from `$table`")) die($mysqli->error);
 while($row = $result->fetch_assoc()) {
   $id = $row['id'];
   echo "<tr>";
   foreach($row as $key=>$value) {
-    if($key == "id") continue;
+    $comment = getFieldComment($table, $key);
+    if(substr($comment,0,1)=="_") continue;
     echo "<td><a href=\"view.php?table=$table&id=$id\">$value</a></td>";
   }
   echo "</tr>\n";

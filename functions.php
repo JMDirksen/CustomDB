@@ -33,3 +33,11 @@ function getFieldType($table, $field) {
   $field = $result->fetch_field();
   return convertType($field->type);
 }
+
+function getFieldComment($table, $field) {
+  global $mysqli;
+  if(!$result = $mysqli->query("show full columns from `$table` where Field = '$field'"))
+    die($mysqli->error);
+  $row = $result->fetch_assoc();
+  return $row['Comment'];
+}
