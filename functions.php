@@ -20,19 +20,17 @@ function button($text, $href = "", $confirm = "") {
   else echo "<button onClick=\"location.href='$href'\">$text</button>\n";
 }
 
-function convertType($type) {
-  if($type == "253") return "text";
-  if($type == "text") return "VARCHAR(50)";
-  if($type == "10") return "date";
-  if($type == "date") return "DATE";
-}
-
 function getFieldType($table, $field) {
   global $mysqli;
-  if(!$result = $mysqli->query("select `$field` from `$table` limit 1"))
+  if(!$result = $mysqli->query("show columns from `$table` where Field = '$field'"))
     die($mysqli->error);
-  $field = $result->fetch_field();
-  return convertType($field->type);
+  $row = $result->fetch_assoc();
+  $type = explode("(",$row['Type'])[0];
+  if(substr($type, -3) == "int") return "number";
+  if(substr($type, -4) == "char") return "text";
+  if($type == "date") return "date";
+  if($type == "bit") return "checkbox";
+  return "unknown($type)";
 }
 
 function getFieldComment($table, $field) {
