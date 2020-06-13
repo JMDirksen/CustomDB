@@ -29,9 +29,9 @@ button(ICON_EDIT, "edit.php?table=$table&id=$id");
 button(ICON_DELETE, "?table=$table&id=$id&delete", "Delete this record?");
 echo "<table>\n";
 while($row = $result->fetch_assoc()) {
-  foreach($row as $key=>$value) {
-    if($key == "id") continue;
-    $display = getFieldComment($table, $key) ?: $key;
+  foreach($row as $field=>$value) {
+    if($field == "id") continue;
+    $display = getFieldComment($table, $field) ?: $field;
     echo "<tr>";
     echo "<th>$display</th>";
     echo "<td>$value</td>";

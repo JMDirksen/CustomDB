@@ -50,8 +50,9 @@ $row = $result->fetch_assoc();
 foreach($row as $field=>$value) {
   if($field == "id") continue;
   $type = getFieldType($table, $field);
+  $display = getFieldComment($table, $field) ?: $field;
   echo "<tr>";
-  echo "<td>$field</td>";
+  echo "<th>$display</th>";
   if(isFK($table, $field)) {
     echo "<td>".fkDropdown($table, $field, $value)."</td>";
   }
