@@ -48,5 +48,5 @@ function getTableComment($table) {
   $q = "SELECT TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '".DB_NAME."' and TABLE_NAME = '$table'";
   if(!$result = $mysqli->query($q)) die($mysqli->error);
   $row = $result->fetch_assoc();
-  return $row['TABLE_COMMENT'];
+  return @$row['TABLE_COMMENT'];
 }
