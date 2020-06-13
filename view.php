@@ -17,8 +17,8 @@ if(!$result = $mysqli->query("select * from `$table` where id = $id"))
   die($mysqli->error);
 
 // Record
-button("<", "browse.php?table=$table");
-button("Edit", "edit.php?table=$table&id=$id");
+button(ICON_BACK, "browse.php?table=$table");
+button(ICON_EDIT, "edit.php?table=$table&id=$id");
 echo "<table>\n";
 while($row = $result->fetch_assoc()) {
   foreach($row as $key=>$value) {

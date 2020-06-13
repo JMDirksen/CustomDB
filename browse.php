@@ -9,13 +9,13 @@ if(!empty($_GET['table'])) {
 else die("Missing/Wrong table variable");
 
 // Buttons
-button("<", "/");
-button("New", "edit.php?table=$table&new");
+button(ICON_BACK, "/");
+button(ICON_NEW, "edit.php?table=$table&new");
 
 // Headers
 if(!$result = $mysqli->query("select * from `$table`")) die($mysqli->error);
 echo "<table>\n";
-echo "<tr>";
+echo "<tr><th></th>";
 $fields = $result->fetch_fields();
 foreach($fields as $field) {
   $comment = getFieldComment($table, $field->name);;
@@ -28,11 +28,13 @@ echo "</tr>\n";
 // Rows
 while($row = $result->fetch_assoc()) {
   $id = $row['id'];
-  echo "<tr>";
+  echo "<tr><td>";
+  button(ICON_VIEW, "view.php?table=$table&id=$id");
+  echo "</td>";
   foreach($row as $field=>$value) {
     $comment = getFieldComment($table, $field);
     if(substr($comment,0,1)=="_") continue;
-    echo "<td><a href=\"view.php?table=$table&id=$id\">$value</a></td>";
+    echo "<td>$value</td>";
   }
   echo "</tr>\n";
 }

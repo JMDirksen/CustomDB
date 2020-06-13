@@ -50,10 +50,10 @@ if(!$result = $mysqli->query("select * from `$table` where id = $id"))
   die($mysqli->error);
 
 // Table
-if($new) button("<", "edit.php?table=$table&id=$id&delete");
+if($new) button(ICON_BACK, "edit.php?table=$table&id=$id&delete");
 else {
-  button("<", "view.php?table=$table&id=$id");
-  button("X", "edit.php?table=$table&id=$id&delete");
+  button(ICON_BACK, "view.php?table=$table&id=$id");
+  button(ICON_DELETE, "edit.php?table=$table&id=$id&delete");
 }
 echo "<form method=\"POST\">\n";
 echo "<input type=\"hidden\" name=\"form_table\" value=\"$table\">\n";
@@ -68,7 +68,7 @@ foreach($row as $key=>$value) {
   echo "</tr>\n";
 }
 ?>
-<tr><td></td><td><input type="submit" name="form_submit" value="Save"</td></tr>
+<tr><td></td><td><input type="submit" name="form_submit" value="<?php echo ICON_SAVE ?>"</td></tr>
 </table>
 </form>
 <?php
