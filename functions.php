@@ -15,8 +15,9 @@ function redirect($url = "") {
   die();
 }
 
-function button($text, $href = "") {
-  echo "<button onClick=\"location.href='$href'\">$text</button>\n";
+function button($text, $href = "", $confirm = "") {
+  if($confirm) echo "<button onClick=\"if(confirm('$confirm')) location.href='$href'\">$text</button>\n";
+  else echo "<button onClick=\"location.href='$href'\">$text</button>\n";
 }
 
 function convertType($type) {

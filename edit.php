@@ -53,7 +53,7 @@ if(!$result = $mysqli->query("select * from `$table` where id = $id"))
 if($new) button(ICON_BACK, "edit.php?table=$table&id=$id&delete");
 else {
   button(ICON_BACK, "view.php?table=$table&id=$id");
-  button(ICON_DELETE, "edit.php?table=$table&id=$id&delete");
+  button(ICON_DELETE, "edit.php?table=$table&id=$id&delete", "Delete this record?");
 }
 echo "<form method=\"POST\">\n";
 echo "<input type=\"hidden\" name=\"form_table\" value=\"$table\">\n";
