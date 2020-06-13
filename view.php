@@ -31,8 +31,9 @@ echo "<table>\n";
 while($row = $result->fetch_assoc()) {
   foreach($row as $key=>$value) {
     if($key == "id") continue;
+    $display = getFieldComment($table, $key) ?: $key;
     echo "<tr>";
-    echo "<th>$key</th>";
+    echo "<th>$display</th>";
     echo "<td>$value</td>";
     echo "</tr>\n";
   }
