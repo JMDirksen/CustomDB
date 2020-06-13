@@ -38,7 +38,7 @@ if(!$result = $mysqli->query("select * from `$table` where id = $id"))
   die($mysqli->error);
 
 // Table
-if($new) button(ICON_BACK, "edit.php?table=$table&id=$id&delete");
+if($new) button(ICON_BACK, "view.php?table=$table&id=$id&delete");
 else {
   button(ICON_BACK, "view.php?table=$table&id=$id");
 }
