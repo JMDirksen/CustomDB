@@ -2,8 +2,6 @@
 require("init.php");
 require("header.php");
 
-echo "<h1>".TITLE."</h1>";
-
 // List tables
 $q = "SELECT TABLE_NAME, TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE table_schema='".DB_NAME."'";
 if(!$result = $mysqli->query($q)) die($mysqli->error);
