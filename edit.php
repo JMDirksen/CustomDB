@@ -10,12 +10,14 @@ if(isset($_POST['form_submit'])) {
     if($key == "form_table") $table = $value;
     if($key == "form_id") $id = $value;
     if(substr($key,0,5) != "form_") {
-      $setfields[] = "`$key` = '$value'";
+      $prefix = (getFieldType($table, $key) == "checkbox") ? "b" : "";
+      $setfields[] = "`$key` = $prefix'$value'";
     }
   }
   
-  $query = "update `$table` set ".join(", ",$setfields)." where id = $id";
-  if(!$result = $mysqli->query($query)) die($mysqli->error);
+  $q = "update `$table` set ".join(", ",$setfields)." where id = $id";
+  echo $q;
+  if(!$result = $mysqli->query($q)) die($mysqli->error);
   
   redirect("view.php?table=$table&id=$id");
 }
@@ -53,10 +55,20 @@ foreach($row as $field=>$value) {
   $display = getFieldComment($table, $field) ?: $field;
   echo "<tr>";
   echo "<th>$display</th>";
+  // Foreign key
   if(isFK($table, $field)) {
     echo "<td>".fkDropdown($table, $field, $value)."</td>";
   }
-  else echo "<td><input type=\"$type\" name=\"$field\" value=\"$value\"></td>";
+  // Checkbox
+  else if($type == "checkbox") {
+    $checked = ($value == "1") ? " checked": "";
+    echo "<input type=\"hidden\" name=\"$field\" value=0>";
+    echo "<td><input type=\"$type\" name=\"$field\" value=1$checked></td>";
+  }
+  // Other
+  else {
+    echo "<td><input type=\"$type\" name=\"$field\" value=\"$value\"></td>";
+  }
   echo "</tr>\n";
 }
 ?>
