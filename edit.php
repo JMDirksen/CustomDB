@@ -47,11 +47,15 @@ echo "<input type=\"hidden\" name=\"form_table\" value=\"$table\">\n";
 echo "<input type=\"hidden\" name=\"form_id\" value=\"$id\">\n";
 echo "<table>\n";
 $row = $result->fetch_assoc();
-foreach($row as $key=>$value) {
-  if($key == "id") continue;
+foreach($row as $field=>$value) {
+  if($field == "id") continue;
+  $type = getFieldType($table, $field);
   echo "<tr>";
-  echo "<td>$key</td>";
-  echo "<td><input type=\"".getFieldType($table, $key)."\" name=\"$key\" value=\"$value\"></td>";
+  echo "<td>$field</td>";
+  if(isFK($table, $field)) {
+    echo "<td>".fkDropdown($table, $field, $value)."</td>";
+  }
+  else echo "<td><input type=\"$type\" name=\"$field\" value=\"$value\"></td>";
   echo "</tr>\n";
 }
 ?>
