@@ -11,9 +11,25 @@ if(isset($_POST['form_submit'])) {
     if($key == "form_id") $id = $value;
     if(substr($key,0,5) != "form_") {
       $type = getFieldType($table, $key);
-      $prefix = ($type == "checkbox") ? "b" : "";
-      $quote = ($type == "number" or $type == "decimal") ? "" : "'";
-      if(($type == "number" or $type == "decimal") and !strlen($value)) $value = "NULL";
+      $prefix = "";
+      $quote = "'";
+      switch($type) {
+        case "checkbox":
+          $prefix = "b";
+        break;
+        case "number":
+          $quote = "";
+          if(!strlen($value)) $value = "NULL";
+        break;
+        case "decimal":
+          $quote = "";
+          if(!strlen($value)) $value = "NULL";
+        break;
+        case "date":
+          $quote = "";
+          if(!strlen($value)) $value = "NULL";
+        break;
+      }
       $value = $prefix.$quote.$value.$quote;
       $setfields[] = "`$key` = $value";
     }
@@ -78,7 +94,8 @@ foreach($row as $field=>$value) {
 
   // Decimal
   else if($type == "decimal") {
-    echo "<td><input type=\"$type\" name=\"$field\" value=\"$value\" min=-2147483648 max=2147483647 step=\"0.01\"></td>";
+    list($min,$max,$step) = getDecibelMinMaxStep($table, $field);
+    echo "<td><input type=\"number\" name=\"$field\" value=\"$value\" min=$min max=$max step=$step></td>";
   }
 
   // Text

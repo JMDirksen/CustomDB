@@ -39,7 +39,20 @@ function getFieldSize($table, $field) {
   if(!$result = $mysqli->query("show columns from `$table` where Field = '$field'"))
     die($mysqli->error);
   $row = $result->fetch_assoc();
-  return trim(explode("(",$row['Type'])[1],"()");
+  return rtrim(explode("(",$row['Type'])[1],")");
+}
+
+function getDecibelMinMaxStep($table, $field) {
+  global $mysqli;
+  if(!$result = $mysqli->query("show columns from `$table` where Field = '$field'"))
+    die($mysqli->error);
+  $row = $result->fetch_assoc();
+  list($precision,$scale) = explode(",",rtrim(explode("(",$row['Type'])[1],")"));
+  $min = rtrim("-".str_repeat("9",$precision-$scale).".".str_repeat("9",$scale),".");
+  $max = rtrim(str_repeat("9",$precision-$scale).".".str_repeat("9",$scale),".");
+  if($scale == 0) $step = "1";
+  else $step = "0.".str_repeat("0",$scale-1)."1";
+  return array($min,$max,$step);
 }
 
 function getFieldComment($table, $field) {

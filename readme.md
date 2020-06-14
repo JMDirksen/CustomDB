@@ -7,7 +7,7 @@
 - Supported SQL date types:
   - CHAR/VARCHAR (HTML type: text)
   - INT (signed) (HTML type: number)
-  - DECIMAL (10,2) (HTML type: number step=0.01)
+  - DECIMAL (HTML type: number (with step))
   - DATE (HTML type: date)
   - BIT (HTML type: checkbox)
 
