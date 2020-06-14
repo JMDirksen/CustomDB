@@ -31,11 +31,10 @@ echo "<table>\n";
 while($row = $result->fetch_assoc()) {
   foreach($row as $field=>$value) {
     if($field == "id") continue;
-    $type = getFieldType($table,$field);
-    $display = getFieldComment($table, $field) ?: $field;
+    $fd = getFieldData($table,$field);
     echo "<tr>";
-    echo "<th>$display</th>";
-    if($type == "checkbox") {
+    echo "<th>$fd[caption]</th>";
+    if($fd['type'] == "checkbox") {
       $checked = ($value) ? "checked" : "";
       echo "<td><input type=\"checkbox\" disabled $checked></td>";
     }    

@@ -10,10 +10,10 @@ if(isset($_POST['form_submit'])) {
     if($key == "form_table") $table = $value;
     if($key == "form_id") $id = $value;
     if(substr($key,0,5) != "form_") {
-      $type = getFieldType($table, $key);
+      $fd = getFieldData($table, $key);
       $prefix = "";
       $quote = "'";
-      switch($type) {
+      switch($fd['type']) {
         case "checkbox":
           $prefix = "b";
         break;
@@ -70,43 +70,40 @@ echo "<table>\n";
 $row = $result->fetch_assoc();
 foreach($row as $field=>$value) {
   if($field == "id") continue;
-  $type = getFieldType($table, $field);
-  $display = getFieldComment($table, $field) ?: $field;
+  $fd = getFieldData($table,$field);
   echo "<tr>";
-  echo "<th>$display</th>";
+  echo "<th>$fd[caption]</th>";
   
   // Foreign key
-  if(isFK($table, $field)) {
+  if($fd['lookup']) {
     echo "<td>".fkDropdown($table, $field, $value)."</td>";
   }
 
   // Checkbox
-  else if($type == "checkbox") {
+  else if($fd['type'] == "checkbox") {
     $checked = ($value == "1") ? " checked": "";
     echo "<td><input type=\"hidden\" name=\"$field\" value=0>";
-    echo "<input type=\"$type\" name=\"$field\" value=1$checked></td>";
+    echo "<input type=\"checkbox\" name=\"$field\" value=1$checked></td>";
   }
 
   // Number
-  else if($type == "number") {
-    echo "<td><input type=\"$type\" name=\"$field\" value=\"$value\" min=-2147483648 max=2147483647></td>";
+  else if($fd['type'] == "number") {
+    echo "<td><input type=\"number\" name=\"$field\" value=\"$value\" min=-2147483648 max=2147483647></td>";
   }
 
   // Decimal
-  else if($type == "decimal") {
-    list($min,$max,$step) = getDecibelMinMaxStep($table, $field);
-    echo "<td><input type=\"number\" name=\"$field\" value=\"$value\" min=$min max=$max step=$step></td>";
+  else if($fd['type'] == "decimal") {
+    echo "<td><input type=\"number\" name=\"$field\" value=\"$value\" min=$fd[min] max=$fd[max] step=$fd[step]></td>";
   }
 
   // Text
-  else if($type == "text") {
-    $maxlength = getFieldSize($table,$field);
-    echo "<td><input type=\"$type\" name=\"$field\" value=\"$value\" maxlength=$maxlength></td>";
+  else if($fd['type'] == "text") {
+    echo "<td><input type=\"text\" name=\"$field\" value=\"$value\" maxlength=$fd[size]></td>";
   }
 
   // Date
-  else if($type == "date") {
-    echo "<td><input type=\"$type\" name=\"$field\" value=\"$value\"></td>";
+  else if($fd['type'] == "date") {
+    echo "<td><input type=\"date\" name=\"$field\" value=\"$value\"></td>";
   }
 
   echo "</tr>\n";

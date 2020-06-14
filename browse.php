@@ -8,8 +8,7 @@ if(!empty($_GET['table'])) {
 }
 else die("Missing/Wrong table variable");
 
-$display = getTableComment($table) ?: $table;
-echo "<h2>$display</h2>";
+echo "<h2>".getTableCaption($table)."</h2>";
 
 // Buttons
 button(ICON_BACK, "/");
@@ -21,10 +20,9 @@ echo "<table>\n";
 echo "<tr><th></th>";
 $fields = $result->fetch_fields();
 foreach($fields as $field) {
-  $comment = getFieldComment($table, $field->name);;
-  if(substr($comment,0,1)=="_") continue;
-  $display = $comment ?: $field->name;
-  echo "<th>$display</th>";
+  $fd = getFieldData($table, $field->name);
+  if($fd['hide']) continue;
+  echo "<th>$fd[caption]</th>";
 }
 echo "</tr>\n";
 
@@ -35,10 +33,9 @@ while($row = $result->fetch_assoc()) {
   button(ICON_VIEW, "view.php?table=$table&id=$id");
   echo "</td>";
   foreach($row as $field=>$value) {
-    $comment = getFieldComment($table, $field);
-    if(substr($comment,0,1)=="_") continue;
-    $type = getFieldType($table,$field);
-    if($type == "checkbox") {
+    $fd = getFieldData($table, $field);
+    if($fd['hide']) continue;
+    if($fd['type'] == "checkbox") {
       $checked = ($value) ? "checked" : "";
       echo "<td><input type=\"checkbox\" disabled $checked></td>";
     }

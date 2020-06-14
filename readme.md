@@ -11,7 +11,12 @@
   - DATE (HTML type: date)
   - BIT (HTML type: checkbox)
 
-## Metadata
+## Metadata (in database comments)
 
-- Table/field comments can be used for nice display names
-- Hide table/field by starting the comment with an underscore
+### Change field caption
+
+- Enter a caption in the table/field comments surrounded by double quotes (like: "My caption")
+
+### Hide field
+
+- Enter a underscoe in the table/field comment to hide the field

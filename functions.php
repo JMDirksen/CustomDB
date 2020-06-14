@@ -20,68 +20,59 @@ function button($text, $href = "", $confirm = "") {
   else echo "<button onClick=\"location.href='$href'\">$text</button>\n";
 }
 
-function getFieldType($table, $field) {
-  global $mysqli;
-  if(!$result = $mysqli->query("show columns from `$table` where Field = '$field'"))
-    die($mysqli->error);
-  $row = $result->fetch_assoc();
-  $type = explode("(",$row['Type'])[0];
-  if(substr($type, -3) == "int") return "number";
-  if(substr($type, -4) == "char") return "text";
-  if($type == "decimal") return "decimal";
-  if($type == "date") return "date";
-  if($type == "bit") return "checkbox";
-  return "unknown($type)";
-}
-
-function getFieldSize($table, $field) {
-  global $mysqli;
-  if(!$result = $mysqli->query("show columns from `$table` where Field = '$field'"))
-    die($mysqli->error);
-  $row = $result->fetch_assoc();
-  return rtrim(explode("(",$row['Type'])[1],")");
-}
-
-function getDecibelMinMaxStep($table, $field) {
-  global $mysqli;
-  if(!$result = $mysqli->query("show columns from `$table` where Field = '$field'"))
-    die($mysqli->error);
-  $row = $result->fetch_assoc();
-  list($precision,$scale) = explode(",",rtrim(explode("(",$row['Type'])[1],")"));
-  $min = rtrim("-".str_repeat("9",$precision-$scale).".".str_repeat("9",$scale),".");
-  $max = rtrim(str_repeat("9",$precision-$scale).".".str_repeat("9",$scale),".");
-  if($scale == 0) $step = "1";
-  else $step = "0.".str_repeat("0",$scale-1)."1";
-  return array($min,$max,$step);
-}
-
-function getFieldComment($table, $field) {
+function getFieldData($table, $field) {
   global $mysqli;
   if(!$result = $mysqli->query("show full columns from `$table` where Field = '$field'"))
     die($mysqli->error);
   $row = $result->fetch_assoc();
-  return $row['Comment'];
+  
+  // Caption
+  if(preg_match('/".+"/', $row['Comment']) == 1) $fd['caption'] = explode('"',$row['Comment'])[1];
+  else $fd['caption'] = ucfirst($field);
+  
+  // Hide
+  $fd['hide'] = (strpos($row['Comment'],"_") !== false) ? "1" : "0";
+  
+  // Type
+  $type = explode("(",$row['Type'])[0];
+  if(substr($type, -3) == "int") $fd['type'] = "number";
+  elseif(substr($type, -4) == "char") $fd['type'] = "text";
+  elseif($type == "decimal") $fd['type'] = "decimal";
+  elseif($type == "date") $fd['type'] = "date";
+  elseif($type == "bit") $fd['type'] = "checkbox";
+  else $df['type'] = "unknown($type)";
+
+  // Size
+  if($fd['type'] == "text") $fd['size'] = rtrim(explode("(",$row['Type'])[1],")");
+  
+  // Decimal
+  elseif($fd['type'] == "decimal") {
+    list($precision,$scale) = explode(",",rtrim(explode("(",$row['Type'])[1],")"));
+    $fd['min'] = rtrim("-".str_repeat("9",$precision-$scale).".".str_repeat("9",$scale),".");
+    $fd['max'] = rtrim(str_repeat("9",$precision-$scale).".".str_repeat("9",$scale),".");
+    if($scale == 0) $fd['step'] = "1";
+    else $fd['step'] = "0.".str_repeat("0",$scale-1)."1";
+  }
+
+  // Lookup
+  $fd['lookup'] = ($row['Key'] == "MUL") ? "1" : "0";
+
+  return $fd;
 }
 
-function getTableComment($table) {
+function getTableCaption($table) {
   global $mysqli;
   $q = "SELECT TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = SCHEMA() and TABLE_NAME = '$table'";
   if(!$result = $mysqli->query($q)) die($mysqli->error);
   $row = $result->fetch_assoc();
-  return @$row['TABLE_COMMENT'];
-}
-
-function isFK($table, $field) {
-  global $mysqli;
-  if(!$result = $mysqli->query("show columns from `$table` where Field = '$field'"))
-    die($mysqli->error);
-  $row = $result->fetch_assoc();
-  return $row['Key'] == "MUL";
+  if(preg_match('/".+"/', $row['TABLE_COMMENT']) == 1) return explode('"',$row['TABLE_COMMENT'])[1];
+  else return ucfirst($table);
 }
 
 function fkDropdown($table, $field, $selected = "") {
   global $mysqli;
-  $q = "SELECT REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE CONSTRAINT_SCHEMA = SCHEMA() and TABLE_NAME = '$table' and COLUMN_NAME = '$field'";
+  $q = "SELECT REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE " .
+       "WHERE CONSTRAINT_SCHEMA = SCHEMA() and TABLE_NAME = '$table' and COLUMN_NAME = '$field'";
   if(!$result = $mysqli->query($q)) die($mysqli->error);
   $row = $result->fetch_assoc();
   $r_table = $row['REFERENCED_TABLE_NAME'];
