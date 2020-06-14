@@ -10,8 +10,12 @@ if(isset($_POST['form_submit'])) {
     if($key == "form_table") $table = $value;
     if($key == "form_id") $id = $value;
     if(substr($key,0,5) != "form_") {
-      $prefix = (getFieldType($table, $key) == "checkbox") ? "b" : "";
-      $setfields[] = "`$key` = $prefix'$value'";
+      $type = getFieldType($table, $key);
+      $prefix = ($type == "checkbox") ? "b" : "";
+      $quote = ($type == "number") ? "" : "'";
+      if($type == "number" and !strlen($value)) $value = "NULL";
+      $value = $prefix.$quote.$value.$quote;
+      $setfields[] = "`$key` = $value";
     }
   }
   
