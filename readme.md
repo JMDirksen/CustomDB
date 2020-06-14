@@ -3,8 +3,13 @@
 ## Database requirements
 
 - Every table must have the id field ('id', INT, Primary key, Auto_increment)
-- Supported SQL field types: CHAR/VARCHAR, INT (signed), DATE, BIT (HTML types respectively: text, number, date, checkbox)
 - All fields must allow null values or have a default value (NULL/DEFAULT)
+- Supported SQL date types:
+  - CHAR/VARCHAR (HTML type: text)
+  - INT (signed) (HTML type: number)
+  - DECIMAL (10,2) (HTML type: number step=0.01)
+  - DATE (HTML type: date)
+  - BIT (HTML type: checkbox)
 
 ## Metadata
 

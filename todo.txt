@@ -1,5 +1,6 @@
+x DECIMAL
+- Full DECIMAL support
 - TEXT / textarea support
-- DECIMAL
 - DATETIME
 - Sorting
 - Filtering

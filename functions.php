@@ -28,6 +28,7 @@ function getFieldType($table, $field) {
   $type = explode("(",$row['Type'])[0];
   if(substr($type, -3) == "int") return "number";
   if(substr($type, -4) == "char") return "text";
+  if($type == "decimal") return "decimal";
   if($type == "date") return "date";
   if($type == "bit") return "checkbox";
   return "unknown($type)";

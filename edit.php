@@ -12,8 +12,8 @@ if(isset($_POST['form_submit'])) {
     if(substr($key,0,5) != "form_") {
       $type = getFieldType($table, $key);
       $prefix = ($type == "checkbox") ? "b" : "";
-      $quote = ($type == "number") ? "" : "'";
-      if($type == "number" and !strlen($value)) $value = "NULL";
+      $quote = ($type == "number" or $type == "decimal") ? "" : "'";
+      if(($type == "number" or $type == "decimal") and !strlen($value)) $value = "NULL";
       $value = $prefix.$quote.$value.$quote;
       $setfields[] = "`$key` = $value";
     }
@@ -74,6 +74,11 @@ foreach($row as $field=>$value) {
   // Number
   else if($type == "number") {
     echo "<td><input type=\"$type\" name=\"$field\" value=\"$value\" min=-2147483648 max=2147483647></td>";
+  }
+
+  // Decimal
+  else if($type == "decimal") {
+    echo "<td><input type=\"$type\" name=\"$field\" value=\"$value\" min=-2147483648 max=2147483647 step=\"0.01\"></td>";
   }
 
   // Text
