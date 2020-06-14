@@ -60,13 +60,20 @@ function getFieldData($table, $field) {
   return $fd;
 }
 
-function getTableCaption($table) {
+function getTableData($table) {
   global $mysqli;
   $q = "SELECT TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = SCHEMA() and TABLE_NAME = '$table'";
   if(!$result = $mysqli->query($q)) die($mysqli->error);
   $row = $result->fetch_assoc();
-  if(preg_match('/".+"/', $row['TABLE_COMMENT']) == 1) return explode('"',$row['TABLE_COMMENT'])[1];
-  else return ucfirst($table);
+  
+  // Caption
+  if(preg_match('/".+"/', $row['TABLE_COMMENT']) == 1) $td['caption'] = explode('"',$row['TABLE_COMMENT'])[1];
+  else $td['caption'] = ucfirst($table);
+
+  // Hide
+  $td['hide'] = (strpos($row['TABLE_COMMENT'],"_") !== false) ? "1" : "0";
+
+  return $td;
 }
 
 function fkDropdown($table, $field, $selected = "") {
