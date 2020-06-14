@@ -37,7 +37,12 @@ while($row = $result->fetch_assoc()) {
   foreach($row as $field=>$value) {
     $comment = getFieldComment($table, $field);
     if(substr($comment,0,1)=="_") continue;
-    echo "<td>$value</td>";
+    $type = getFieldType($table,$field);
+    if($type == "checkbox") {
+      $checked = ($value) ? "checked" : "";
+      echo "<td><input type=\"checkbox\" disabled $checked></td>";
+    }
+    else echo "<td>$value</td>";
   }
   echo "</tr>\n";
 }
