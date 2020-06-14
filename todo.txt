@@ -1,0 +1,3 @@
+- TEXT / textarea support
+- DECIMAL
+- DATETIME

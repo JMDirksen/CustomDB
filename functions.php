@@ -33,6 +33,14 @@ function getFieldType($table, $field) {
   return "unknown($type)";
 }
 
+function getFieldSize($table, $field) {
+  global $mysqli;
+  if(!$result = $mysqli->query("show columns from `$table` where Field = '$field'"))
+    die($mysqli->error);
+  $row = $result->fetch_assoc();
+  return trim(explode("(",$row['Type'])[1],"()");
+}
+
 function getFieldComment($table, $field) {
   global $mysqli;
   if(!$result = $mysqli->query("show full columns from `$table` where Field = '$field'"))
