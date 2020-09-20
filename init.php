@@ -1,5 +1,5 @@
 <?php
-  require("config.php");
+  session_start();
   require("functions.php");
   require("icons.php");
 

@@ -1,5 +1,8 @@
+<?php
+   $title = basename($_SERVER['SCRIPT_NAME']) == "login.php" ? "Login" : ucwords($_SESSION['db']);
+?>
 <html>
-<head><title>CustomDB</title></head>
+<head><title><?php echo $title; ?> - CustomDB</title></head>
 <body>
 
-<h1><?php echo TITLE ?></h1>
+<h1><?php echo $title; ?></h1>

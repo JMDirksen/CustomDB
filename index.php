@@ -11,4 +11,5 @@ while($row = $result->fetch_assoc()) {
     echo "<a href=\"browse.php?table=$row[table_name]\">$td[caption]</a><br/>";
 }
 
+echo "<br><small><a href=\"logout.php\">Logout</a></small>";
 require("footer.php");

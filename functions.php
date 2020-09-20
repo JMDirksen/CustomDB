@@ -1,7 +1,10 @@
 <?php
 function connect() {
-  $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-  if($mysqli->connect_error) die($mysqli->connect_error);
+  @$mysqli = new mysqli(ini_get("mysqli.default_host"), $_SESSION['username'], $_SESSION['password'], $_SESSION['db']);
+  if($mysqli->connect_error) {
+    if(in_array($mysqli->connect_errno, array(1045,4151))) redirect('login.php');
+    die($mysqli->connect_errno." ".$mysqli->connect_error);
+  }
   return $mysqli;
 }
 
