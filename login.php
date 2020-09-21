@@ -20,7 +20,7 @@
     echo "<select name=\"db\">";
     while($row = $result->fetch_assoc()) {
       $db = $row['Database'];
-      $selected = ($db == $_SESSION['db']) ? " selected" : "";
+      $selected = ($db == @$_SESSION['db']) ? " selected" : "";
       if(in_array($db, array("information_schema"))) continue;
       echo "<option value=\"$db\"$selected>".ucwords($db)."</option>";
     }

@@ -58,7 +58,13 @@ function getFieldData($table, $field) {
   }
 
   // Lookup
-  $fd['lookup'] = ($row['Key'] == "MUL") ? "1" : "0";
+  if($row['Key'] == "MUL") {
+    $q = "SELECT REFERENCED_TABLE_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE CONSTRAINT_SCHEMA = SCHEMA() AND TABLE_NAME = '$table' AND COLUMN_NAME = '$field'";
+    if(!$result = $mysqli->query($q)) die($mysqli->error);
+    $row = $result->fetch_assoc();
+    $fd['lookup'] = $row['REFERENCED_TABLE_NAME'];
+  }
+  else $fd['lookup'] = false;
 
   return $fd;
 }
@@ -89,12 +95,21 @@ function fkDropdown($table, $field, $selected = "") {
   $r_field = $row['REFERENCED_COLUMN_NAME'];
   
   $dropdown = "<select name=\"$field\">";
-  if(!$result = $mysqli->query("select $r_field from $r_table")) die($mysqli->error);
+  if(!$result = $mysqli->query("select * from $r_table")) die($mysqli->error);
   while($row = $result->fetch_assoc()) {
     $value = $row[$r_field];
+    $lookupValue = array_values($row)[1];
     $sel = ($value == $selected) ? " selected" : "";
-    $dropdown .= "<option value=\"$value\"$sel>$value</option>";
+    $dropdown .= "<option value=\"$value\"$sel>$lookupValue</option>";
   }
   $dropdown .= "</select>\n";
   return $dropdown;
+}
+
+function getLookupValue($lookupTable, $id) {
+  global $mysqli;
+  $q = "SELECT * FROM `$lookupTable` WHERE id = $id";
+  if(!$result = $mysqli->query($q)) die($mysqli->error);
+  $row = $result->fetch_array();
+  return $row[1];
 }

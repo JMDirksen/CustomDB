@@ -37,7 +37,11 @@ while($row = $result->fetch_assoc()) {
     if($fd['type'] == "checkbox") {
       $checked = ($value) ? "checked" : "";
       echo "<td><input type=\"checkbox\" disabled $checked></td>";
-    }    
+    }
+    elseif($fd['lookup']) {
+      $lookupValue = getLookupValue($fd['lookup'], $value);
+      echo "<td>$lookupValue</td>";
+    }
     else echo "<td>$value</td>";
     echo "</tr>\n";
   }
