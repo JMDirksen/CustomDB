@@ -8,8 +8,6 @@ if(!empty($_GET['table'])) {
 }
 else die("Missing/Wrong table variable");
 
-echo "<h2>".getTableData($table)['caption']."</h2>";
-
 // Breadcrumbs
 echo breadcrumbs($table);
 

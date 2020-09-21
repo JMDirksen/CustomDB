@@ -4,5 +4,3 @@
 <html>
 <head><title><?php echo $title; ?> - CustomDB</title></head>
 <body>
-
-<h1><?php echo $title; ?></h1>

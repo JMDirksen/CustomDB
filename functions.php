@@ -117,12 +117,12 @@ function getLookupValue($lookupTable, $id) {
 function breadcrumbs($table = null, $record = null, $action = null) {
   $breadcrumbs = "<div><a href=\"/\">".ucwords($_SESSION['db'])."</a>";
   if($table) {
-    $breadcrumbs .= " ".ICON_RIGHT." <a href=\"browse.php?table=$table\">".getTableData($table)['caption']."</a>";
+    $breadcrumbs .= " ".ICON_BREADCRUMBS." <a href=\"browse.php?table=$table\">".getTableData($table)['caption']."</a>";
   }
   if($record) {
-    $breadcrumbs .= " ".ICON_RIGHT." <a href=\"view.php?table=$table&id=$record\">".getRecordData($table, $record)['caption']."</a>";
+    $breadcrumbs .= " ".ICON_BREADCRUMBS." <a href=\"view.php?table=$table&id=$record\">".getRecordData($table, $record)['caption']."</a>";
   }
-  if($action) $breadcrumbs .= " > $action";
+  if($action) $breadcrumbs .= " ".ICON_BREADCRUMBS." $action";
   $breadcrumbs .= "</div><br>";
   return $breadcrumbs;
 }

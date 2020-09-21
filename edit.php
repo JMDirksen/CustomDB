@@ -50,7 +50,7 @@ $new = isset($_GET['new']) ? true : false;
 if(empty($table)||(empty($id)&&!$new)) die("Input error");
 
 // Breadcrumbs
-echo breadcrumbs($table, $id, $new ? ICON_NEW : ICON_EDIT);
+echo breadcrumbs($table, $id, $new ? 'new' : 'edit');
 
 // Query
 if($new) {
