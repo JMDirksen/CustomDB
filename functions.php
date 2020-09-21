@@ -18,9 +18,9 @@ function redirect($url = "") {
   die();
 }
 
-function button($text, $href = "", $confirm = "") {
-  if($confirm) echo "<button onClick=\"if(confirm('$confirm')) location.href='$href'\">$text</button>\n";
-  else echo "<button onClick=\"location.href='$href'\">$text</button>\n";
+function button($icon, $href = "", $confirm = "") {
+  if($confirm) echo "<a href=\"javascript:if(confirm('$confirm')) location.href='$href'\"><i class=\"material-icons\">$icon</i></a>\n";
+  else echo "<a href=\"$href\"><i class=\"material-icons\">$icon</i></a>\n";
 }
 
 function getFieldData($table, $field) {
@@ -117,12 +117,12 @@ function getLookupValue($lookupTable, $id) {
 function breadcrumbs($table = null, $record = null, $action = null) {
   $breadcrumbs = "<div><a href=\"/\">".ucwords($_SESSION['db'])."</a>";
   if($table) {
-    $breadcrumbs .= " ".ICON_BREADCRUMBS." <a href=\"browse.php?table=$table\">".getTableData($table)['caption']."</a>";
+    $breadcrumbs .= " &#8674; <a href=\"browse.php?table=$table\">".getTableData($table)['caption']."</a>";
   }
   if($record) {
-    $breadcrumbs .= " ".ICON_BREADCRUMBS." <a href=\"view.php?table=$table&id=$record\">".getRecordData($table, $record)['caption']."</a>";
+    $breadcrumbs .= " &#8674; <a href=\"view.php?table=$table&id=$record\">".getRecordData($table, $record)['caption']."</a>";
   }
-  if($action) $breadcrumbs .= " ".ICON_BREADCRUMBS." $action";
+  if($action) $breadcrumbs .= " &#8674; $action";
   $breadcrumbs .= "</div><br>";
   return $breadcrumbs;
 }

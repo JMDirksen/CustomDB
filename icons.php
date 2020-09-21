@@ -1,11 +1,10 @@
 <?php
 
-// https://www.w3schools.com/charsets/ref_utf_punctuation.asp
+// https://material.io/resources/icons
 
-define("ICON_NEW", "&#10024;");
-define("ICON_VIEW", "&#128270;");
-define("ICON_EDIT", "&#128221;");
-define("ICON_BACK", "&#128072;");
-define("ICON_DELETE", "&#10060;");
-define("ICON_SAVE", "&#128229;");
-define("ICON_BREADCRUMBS", "&#8674;");
+define("ICON_NEW", "note_add");
+define("ICON_VIEW", "pageview");
+define("ICON_EDIT", "create");
+define("ICON_BACK", "arrow_back");
+define("ICON_DELETE", "delete");
+define("ICON_SAVE", "save");
