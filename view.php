@@ -40,7 +40,7 @@ while($row = $result->fetch_assoc()) {
     }
     elseif($fd['lookup']) {
       $lookupValue = getLookupValue($fd['lookup'], $value);
-      echo "<td>$lookupValue</td>";
+      echo "<td><a href=\"view.php?table=".$fd['lookup']."&id=$value\">$lookupValue</a></td>";
     }
     else echo "<td>$value</td>";
     echo "</tr>\n";
