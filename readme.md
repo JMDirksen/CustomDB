@@ -4,6 +4,7 @@
 
 - Every table must have the id field ('id', INT, Primary key, Auto_increment)
 - All fields must allow null values or have a default value (NULL/DEFAULT)
+- The 2nd field will be used as display value (like a name)
 - Supported SQL date types:
   - CHAR/VARCHAR (HTML type: text)
   - INT (signed) (HTML type: number)

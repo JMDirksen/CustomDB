@@ -2,6 +2,9 @@
 require("init.php");
 require("header.php");
 
+// Breadcrumbs
+echo breadcrumbs();
+
 // List tables
 $q = "SELECT table_name FROM information_schema.tables WHERE table_schema = SCHEMA() ORDER BY table_name";
 if(!$result = $mysqli->query($q)) die($mysqli->error);

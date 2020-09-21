@@ -19,6 +19,9 @@ if(isset($_GET['delete'])) {
   redirect("browse.php?table=$table");
 }
 
+// Breadcrumbs
+echo breadcrumbs($table, $id);
+
 // Query
 if(!$result = $mysqli->query("select * from `$table` where id = $id"))
   die($mysqli->error);

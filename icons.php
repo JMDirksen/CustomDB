@@ -6,3 +6,4 @@ define("ICON_EDIT", "&#128221;");
 define("ICON_BACK", "&#128072;");
 define("ICON_DELETE", "&#10060;");
 define("ICON_SAVE", "&#128229;");
+define("ICON_RIGHT", "&#8674;");

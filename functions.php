@@ -113,3 +113,25 @@ function getLookupValue($lookupTable, $id) {
   $row = $result->fetch_array();
   return $row[1];
 }
+
+function breadcrumbs($table = null, $record = null, $action = null) {
+  $breadcrumbs = "<div><a href=\"/\">".ucwords($_SESSION['db'])."</a>";
+  if($table) {
+    $breadcrumbs .= " ".ICON_RIGHT." <a href=\"browse.php?table=$table\">".getTableData($table)['caption']."</a>";
+  }
+  if($record) {
+    $breadcrumbs .= " ".ICON_RIGHT." <a href=\"view.php?table=$table&id=$record\">".getRecordData($table, $record)['caption']."</a>";
+  }
+  if($action) $breadcrumbs .= " > $action";
+  $breadcrumbs .= "</div><br>";
+  return $breadcrumbs;
+}
+
+function getRecordData($table, $id) {
+  global $mysqli;
+  if(!$result = $mysqli->query("select * from `$table` where id = $id"))
+    die($mysqli->error);
+  $rd = $result->fetch_assoc();
+  $rd['caption'] = array_values($rd)[1];
+  return $rd;
+}

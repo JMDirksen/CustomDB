@@ -10,6 +10,9 @@ else die("Missing/Wrong table variable");
 
 echo "<h2>".getTableData($table)['caption']."</h2>";
 
+// Breadcrumbs
+echo breadcrumbs($table);
+
 // Buttons
 button(ICON_BACK, "/");
 button(ICON_NEW, "edit.php?table=$table&new");

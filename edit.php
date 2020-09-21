@@ -49,6 +49,9 @@ $id = isset($_GET['id']) ? sanitize($_GET['id']) : "";
 $new = isset($_GET['new']) ? true : false;
 if(empty($table)||(empty($id)&&!$new)) die("Input error");
 
+// Breadcrumbs
+echo breadcrumbs($table, $id, $new ? ICON_NEW : ICON_EDIT);
+
 // Query
 if($new) {
   if(!$result = $mysqli->query("insert into `$table` () values()"))
